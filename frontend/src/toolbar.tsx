@@ -13,6 +13,9 @@ export const PipelineToolbar: React.FC = () => {
         <DraggableNode type="text" label="Text" />
         <DraggableNode type="fileSave" label="File" />
         <DraggableNode type="note" label="Note" />
+        <DraggableNode type="dataLoader" label="Dataloader" />
+        <DraggableNode type="transformer" label="Transformer" />
+        <DraggableNode type="integration" label="Integration" />
       </div>
     </div>
   );

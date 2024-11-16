@@ -25,6 +25,9 @@ const nodeTypes = {
   llm: AbstractNode,
   fileSave: AbstractNode,
   note: AbstractNode,
+  dataLoader: AbstractNode,
+  transformer: AbstractNode,
+  integration: AbstractNode,
   text: TextNode,
 };
 

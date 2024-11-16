@@ -1,12 +1,20 @@
+import React from "react";
 import BaseNode from "./baseNode";
 import { nodeConfigs } from "./nodeConfigs";
 import { useStore } from "./../store";
+import { NodeConfig } from "./nodeConfigs";
 
-const AbstractNode = ({ id, type, data }) => {
-  const config = nodeConfigs[type];
+interface AbstractNodeProps {
+  id: string;
+  type: string;
+  data: Record<string, any>;
+}
+
+const AbstractNode: React.FC<AbstractNodeProps> = ({ id, type, data }) => {
+  const config: NodeConfig = nodeConfigs[type];
   const { updateNodeField } = useStore();
 
-  const handleChange = (name, value) => {
+  const handleChange = (name: string, value: any) => {
     updateNodeField(id, name, value);
   };
 
@@ -31,7 +39,7 @@ const AbstractNode = ({ id, type, data }) => {
                 onChange={(e) => handleChange(field.name, e.target.value)}
                 className="mt-1 px-3 py-2 border border-gray-300 rounded-full"
               >
-                {field.options.map((option) => (
+                {field.options?.map((option) => (
                   <option key={option} value={option}>
                     {option}
                   </option>

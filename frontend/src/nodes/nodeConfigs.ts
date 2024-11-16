@@ -1,6 +1,6 @@
 import { HandleType, Position } from "reactflow";
 
-interface NodeConfig {
+export interface NodeConfig {
   title: string;
   type?: string;
   fields: {
@@ -124,5 +124,64 @@ export const nodeConfigs: Record<string, NodeConfig> = {
       },
     ],
     handles: [{ type: "source", position: Position.Right, id: "output" }],
+  },
+  dataLoader: {
+    title: "Data Loader",
+    fields: [
+      {
+        name: "sourceType",
+        label: "Source Type",
+        type: "select",
+        options: ["Database", "API", "File"],
+      },
+      {
+        name: "query",
+        label: "Query/Endpoint",
+        type: "text",
+        placeholder: "Enter query or endpoint",
+      },
+    ],
+    handles: [
+      { type: "source", position: Position.Right, id: "dataOut" },
+      { type: "target", position: Position.Left, id: "dataIn" },
+    ],
+  },
+
+  transformer: {
+    title: "Transformer",
+    fields: [
+      {
+        name: "transformationLogic",
+        label: "Logic",
+        type: "textarea",
+        placeholder: "Enter logic here",
+      },
+    ],
+    handles: [
+      { type: "target", position: Position.Left, id: "input" },
+      { type: "source", position: Position.Right, id: "output" },
+    ],
+  },
+
+  integration: {
+    title: "Integration",
+    fields: [
+      {
+        name: "serviceName",
+        label: "Service Name",
+        type: "text",
+        placeholder: "Enter service name",
+      },
+      {
+        name: "apiKey",
+        label: "API Key",
+        type: "text",
+        placeholder: "Enter API key",
+      },
+    ],
+    handles: [
+      { type: "target", position: Position.Left, id: "integrationInput" },
+      { type: "source", position: Position.Right, id: "integrationOutput" },
+    ],
   },
 };

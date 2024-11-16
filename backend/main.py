@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from typing import List, Dict
+from typing import List
 import networkx as nx
 from fastapi.middleware.cors import CORSMiddleware
 

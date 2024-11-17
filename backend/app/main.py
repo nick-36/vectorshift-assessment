@@ -12,7 +12,6 @@ origins = [
     "http://localhost:3000",
 ]
 
-# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins, 
@@ -45,7 +44,6 @@ def parse_pipeline(pipeline: Pipeline):
 
     is_dag = nx.is_directed_acyclic_graph(graph)
 
-    # Return the result
     return {
         "num_nodes": num_nodes,
         "num_edges": num_edges,

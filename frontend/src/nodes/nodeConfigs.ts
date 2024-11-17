@@ -111,7 +111,11 @@ export const nodeConfigs: Record<string, NodeConfig> = {
         options: ["CSV", "JSON", "TXT"],
       },
     ],
-    handles: [{ type: "target", position: Position.Left, id: "input" }],
+
+    handles: [
+      { type: "target", position: Position.Left, id: "input" },
+      { type: "source", position: Position.Right, id: "output" },
+    ],
   },
   note: {
     title: "Note",
@@ -123,7 +127,10 @@ export const nodeConfigs: Record<string, NodeConfig> = {
         placeholder: "Enter your note here",
       },
     ],
-    handles: [{ type: "source", position: Position.Right, id: "output" }],
+    handles: [
+      { type: "source", position: Position.Left, id: "input" },
+      { type: "source", position: Position.Right, id: "output" },
+    ],
   },
   dataLoader: {
     title: "Data Loader",
@@ -162,7 +169,6 @@ export const nodeConfigs: Record<string, NodeConfig> = {
       { type: "source", position: Position.Right, id: "output" },
     ],
   },
-
   integration: {
     title: "Integration",
     fields: [

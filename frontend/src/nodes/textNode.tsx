@@ -7,12 +7,10 @@ import {
 } from "reactflow";
 import BaseNode from "./baseNode";
 import { useStore } from "../store";
+import useAutoSizeTextArea from "../hooks/useAutoSizeTextArea";
 
 interface TextNodeProps {
   id: string;
-  data: {
-    text?: string;
-  };
 }
 
 interface VariableHandle extends HandleProps {
@@ -21,23 +19,23 @@ interface VariableHandle extends HandleProps {
   style?: React.CSSProperties;
 }
 
-function TextNode({ id, data }: TextNodeProps): JSX.Element {
+function TextNode({ id }: TextNodeProps): JSX.Element {
   const updateNodeInternals = useUpdateNodeInternals();
-  const inputRef = useRef<HTMLTextAreaElement>(null);
-
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const { nodes, updateNodeField } = useStore();
   const nodeData = nodes.find((node) => node.id === id)?.data || {};
   const currText = nodeData.text || "{{input}}";
   const variables = nodeData.variables || [];
+  useAutoSizeTextArea(`textarea-${id}`, textAreaRef.current, currText);
 
   useEffect(() => {
     const variableMatches = Array.from(
-      currText.matchAll(/\{\{\s*([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\}\}/g)
+      currText.matchAll(/\{\{\s*([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\}\}(?!\})/g)
     );
 
-    const detectedVariables = variableMatches.map((match: any, index) => {
+    const detectedVariables = variableMatches.map((match: any) => {
       const lineIndex =
-        currText.substring(0, match.index).split("\n").length - 1;
+        currText.substring(0, match.index!).split("\n").length - 1;
       return {
         name: match[1],
         line: lineIndex,
@@ -60,15 +58,6 @@ function TextNode({ id, data }: TextNodeProps): JSX.Element {
   ];
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.style.height = "auto";
-      inputRef.current.style.width = "auto";
-      inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
-      inputRef.current.style.width = `${inputRef.current.scrollWidth}px`;
-    }
-  }, [currText]);
-
-  useEffect(() => {
     updateNodeInternals(id);
   }, [variables, id, updateNodeInternals]);
 
@@ -79,7 +68,8 @@ function TextNode({ id, data }: TextNodeProps): JSX.Element {
   const content = (
     <label className="flex flex-col space-y-2">
       <textarea
-        ref={inputRef}
+        id={`textarea-${id}`}
+        ref={textAreaRef}
         value={currText}
         onChange={handleTextChange}
         className="px-3 py-2 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"

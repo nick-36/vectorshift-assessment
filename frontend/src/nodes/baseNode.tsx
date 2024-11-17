@@ -90,4 +90,5 @@ const BaseNode: React.FC<BaseNodeProps> = ({ id, title, handles, content }) => {
   );
 };
 
-export default BaseNode;
+export default React.memo(BaseNode);
+  

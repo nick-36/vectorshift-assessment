@@ -14,7 +14,7 @@ export interface NodeConfig {
     type: HandleType;
     position: Position;
     id: string;
-    style?: any;
+    style?: React.CSSProperties;
   }[];
   customLogic?: (data: any) => {};
   defaultData?: Record<string, any>;

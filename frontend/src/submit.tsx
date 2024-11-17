@@ -16,11 +16,13 @@ export const SubmitButton = () => {
         nodes: transformedNodes,
         edges: transformedEdges,
       };
+      const apiUrl =
+        process.env.REACT_APP_ENVIRONMENT === "development"
+          ? "http://localhost:8000/pipelines/parse"
+          : "https://vectorshift-assessment.onrender.com/pipelines/parse";
 
-      const response = await axios.post(
-        "http://localhost:8000/pipelines/parse",
-        data
-      );
+      const response = await axios.post(apiUrl, data);
+
       const result = response.data;
 
       alert(

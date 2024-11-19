@@ -1,10 +1,15 @@
 import { Edge, Node } from "reactflow";
 import { useStore } from "./store";
 import axios from "axios";
+import { useState } from "react";
 
 export const SubmitButton = () => {
   const { nodes, edges } = useStore();
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = async () => {
+    setIsLoading(true);
+
     try {
       const transformedNodes = nodes.map((node: Node) => ({ id: node.id }));
       const transformedEdges = edges.map((edge: Edge) => ({
@@ -33,6 +38,8 @@ export const SubmitButton = () => {
     } catch (error) {
       console.error("Error submitting data:", error);
       alert("There was an error submitting the data.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -43,7 +50,14 @@ export const SubmitButton = () => {
         type="button"
         onClick={handleSubmit}
       >
-        Submit
+        {isLoading ? (
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            Processing...
+          </div>
+        ) : (
+          "Submit"
+        )}
       </button>
     </div>
   );
